@@ -97,14 +97,15 @@ If there is no agent code yet, ask ONE question: what are you building? Then do 
 
 ## 9. On yes: sign in
 
-1. Ask: "Which email should own the Synap workspace?" Never assume it.
+1. Do not ask which email to use. People often cannot choose until they see their options, and the sign-in page shows them.
+   They pick the account there (Google, GitHub or email), and the approval page shows which account they chose.
 2. Check the CLI first: `<cli> auth login --help` must list `--purpose`. If it does not, use `npx @maximem/synap-cli@latest` as `<cli>`.
 3. Run it in the BACKGROUND (it waits up to 35 minutes for the human; a shell timeout would kill the pairing), quoting every value:
-   `<cli> auth login --purpose onboarding --agent-name "<your lowercase product name>" --email "<their answer>" --source "<llms if the prompt you were given has a Source: llms line, otherwise website>"`.
-   The email must look like an email; otherwise stop and ask. If it says onboarding setup is not enabled yet, tell the human
-   plainly and stop; do not retry.
+   `<cli> auth login --purpose onboarding --agent-name "<your lowercase product name>" --source "<llms if the prompt you were given has a Source: llms line, otherwise website>"`.
+   Do not pass `--email`. If it says onboarding setup is not enabled yet, tell the human plainly and stop; do not retry.
 4. The link and code are printed on stderr: read them from the log. Show the human ONLY that link, and only if its host is
-   `synap.maximem.ai`; if not, stop and say so. Tell them: open it, sign up or sign in, check the code matches, click Approve once.
+   `synap.maximem.ai`; if not, stop and say so. Tell them: open it, sign in or sign up with whichever account you want to own
+   Synap, check the code matches, click Approve once.
 5. Never open the link yourself, never approve for them, never ask for a password. Wait for the command to finish.
 6. The browser only remembers a link for 15 minutes. If the command has not finished 15 minutes after it printed the link,
    stop it, start a new `auth login --purpose onboarding`, and tell the human plainly that you made a fresh link because the
